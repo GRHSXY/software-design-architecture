@@ -7,8 +7,10 @@ import requests
 from bs4 import BeautifulSoup
 
 #输入账号密码及登录
-username = input("Enter in your username: ")
-password = getpass("Enter your password: ")
+#!username = input("Enter in your username: ")
+username = '2018302110312'
+password = '230514'
+#!password = getpass("Enter your password: ")
 
 #chrome_options=Options()
 #chrome_options.add_experimental_option("detach",True)
@@ -26,51 +28,60 @@ username_textbox = driver.find_element_by_id("username")
 username_textbox.send_keys(username)
 password_textbox = driver.find_element_by_id("password")
 password_textbox.send_keys(password)
-
-#login_button = driver.find_element_by_id("Sign in")
 login_button = driver.find_element_by_xpath("//*[@type='submit']")  ##寻找type=submit的元素
 login_button.submit()
-
 time.sleep(1)
 
-#登录之后获取信息
-driver.get("http://hqfwdt.whu.edu.cn/pc/?typeName=repair&linkUrl=\
-http://hqfwdt.whu.edu.cn/repair/redirect/publish/repairs&isShow=1")     #我要报修界面
 
-hands = driver.window_handles  # 获取所有的句柄
-driver.switch_to.window(hands[-1])  # 直接获取hands这个list数据里面最后1个hand的值,切换到最后一个窗口
-
+driver.get("http://hqfwdt.whu.edu.cn/repair/redirect/website/index")
 time.sleep(1)
+#search_driver = driver.current_window_handle      # 此行代码用来定位当前页面
+#driver.switch_to.window(driver.window_handles[0])
 
-address = input("Enter in your address: ")
-discription = input("Enter in your discription: ")
-telephone = input("Enter in your telephone: ")
+repair_link=driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/a")
+url=repair_link.get_attribute("href")
+driver.get(url)
 
-address_textbox = driver.find_element_by_id("address")
-address_textbox.send_keys(address)
+
+#!巨坑
+#address_textbox = driver.switch_to.frame("section")
+iframe=driver.find_element_by_id("section") #定位到iframe
+driver.switch_to_frame(iframe)  #切换到iframe
+#driver.switch_to.frame("section")
+#driver.switch_to_frame("section")
+time.sleep(1)
+'''
+repair_link=driver.find_element_by_id("myWant")
+repair_link.click()
+time.sleep(1)
+#search_window = driver.current_window_handle
+n = driver.window_handles  # 这个时候会生成一个新窗口或新标签页的句柄，代表这个窗口的模拟driver
+print('当前句柄: ', n)  # 会打印所有的句柄
+driver.switch_to_window(n[-1])  # driver切换至最新生产的页面
+print(driver.current_window_handle)
+time.sleep(1)
+#driver.get("http://hqfwdt.whu.edu.cn/pc/?typeName=repair&linkUrl=\
+#http://hqfwdt.whu.edu.cn/repair/redirect/publish/repairs&isShow=1")     #我要报修界面
+'''
+
+#driver.get("http://hqfwdt.whu.edu.cn/pc/?typeName=repair")
+my_address = input("Enter in your address: ")
+my_discription = input("Enter in your discription: ")
+my_telephone = input("Enter in your telephone: ")
+
+
+#address_textbox = driver.find_element_by_id("address")
+address_textbox = driver.find_element_by_xpath("//input[@name='address']")
+address_textbox.send_keys(my_address)
 discription_textbox = driver.find_element_by_name("content")
-discription_textbox.send_keys(discription)
+discription_textbox.send_keys(my_discription)
 telephone_textbox = driver.find_element_by_name("userMobile")
-telephone_textbox.send_keys(telephone)
+telephone_textbox.send_keys(my_telephone)
 
-'''
-a_url = 'http://hqfwdt.whu.edu.cn/pc/?typeName=repair&linkUrl=http://hqfwdt.whu.edu.cn/repair/redirect/publish/repairs&isShow=1'
-html = requests.get(a_url)
-pagesource = html.text
-print(pagesource)
-'''
+
 
 #driver.refresh()   #刷新界面
 time.sleep(5)
 driver.quit()
-'''
 
-#driver.get("http://hqfwdt.whu.edu.cn/repairredirect/website/index")
 
-time.sleep(3)
-
-driver.get("http://hqfwdt.whu.edu.cn/pc/?typeName=repair&linkUrl=\
-http://hqfwdt.whu.edu.cn/repair/redirect/publish/repairs&isShow=1")  #我要报修界面
-#print("获取当前URL：", driver.current_url)  # 获取当前URL
-#print("获取当前页面title：", driver.title)  # 获取当前页面title
-'''

@@ -7,10 +7,8 @@ import requests
 from bs4 import BeautifulSoup
 
 #输入账号密码及登录
-#!username = input("Enter in your username: ")
-username = '2018302110312'
-password = '230514'
-#!password = getpass("Enter your password: ")
+username = input("Enter in your username: ")
+password = getpass("Enter your password: ")
 
 #chrome_options=Options()
 #chrome_options.add_experimental_option("detach",True)

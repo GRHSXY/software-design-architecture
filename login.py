@@ -39,6 +39,9 @@ time.sleep(1)
 repair_link=driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/a")
 url=repair_link.get_attribute("href")
 driver.get(url)
+time.sleep(2)
+driver.refresh()
+time.sleep(1)
 
 
 #!巨坑
